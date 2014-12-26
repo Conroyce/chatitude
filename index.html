@@ -5,7 +5,60 @@
   <title>Chatitude</title>
 </head>
 <body>
+<h1>Chatitude</h1>
+<div class="main">
+</div>
+
 <script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/handlebars-v1.3.0.js"></script>
+<script src="js/api.js"></script>
 <script src="js/main.js"></script>
+<script id="chat-template" type="text/x-handlebars-template">
+  <div class="entry">
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Message</th>
+        <th>Time</th>
+        <th>ID</th>
+      </tr>
+      {{#each chats}}
+        <tr>
+        <td class="user">{{this.user}}</td>
+        <td class="message">{{this.message}}</td>
+        <td class="time">{{this.time}}</td>
+        <td class="id">{{this.id}}</td>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
