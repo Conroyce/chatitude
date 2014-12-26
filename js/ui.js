@@ -1,22 +1,27 @@
-API.getChats(function(chats) {
-  var context = [];
+var chat = function() {
+  $('.main').html('');
+  API.getChats(function(chats) {
+    var context = [];
 
-  chats.forEach(function(chat) {
-    var ans = {};
+    chats.forEach(function(chat) {
+      var ans = {};
 
-    ans.user = chat.user;
-    ans.message = chat.message;
-    ans.time = chat.time;
-    ans.id = chat.id;
-    context.push(ans);
-  });
+      ans.user = chat.user;
+      ans.message = chat.message;
+      ans.time = chat.time;
+      ans.id = chat.id;
+      context.push(ans);
+    });
 
-  var source = $('#chat-template').html();
-  var template = Handlebars.compile(source);
-  var html = template({chats:context});
+    var source = $('#chat-template').html();
+    var template = Handlebars.compile(source);
+    var html = template({chats:context});
 
-  $('.main').append(html);
-});
+    $('.main').append(html);
+  })
+};  
+
+window.setInterval(chat, 2000);
 
 $('.signup').on('click','.signup-submit',function(e) {
   var $username = $('#user-up').val();
@@ -74,18 +79,3 @@ $('.message').on('click','.mes-submit',function() {
 //   console.log("Sent chats:", chats)
 // })
 
-$.ajax({
-  type: 'POST',
-  url: 'http://chat.api.mks.io/signup',
-  data: {username: username, password: password}
-}).success(function(account) {
-  conosole.log("sent account:", account)
-})
-
-$.ajax({
-  type:'POST',
-  url: 'http://chat.api.mks.io/signin',
-  data: {username: username, password: password}
-}).success(function() {
-  console.log("sent account:", account)
-})
