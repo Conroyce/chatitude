@@ -21,7 +21,6 @@ API.getChats(function(chats) {
 $('.signup').on('click','.signup-submit',function(e) {
   var $username = $('#user-up').val();
   var $password = $('#pass-up').val();
-  console.log($('#user-up').val() + " " + $('#pass-up').val());
 
   $.ajax({
     type: 'POST',
@@ -32,10 +31,11 @@ $('.signup').on('click','.signup-submit',function(e) {
   })
 })
 
+var $apiToken = ""; 
 $('.signin').on('click','.signin-submit',function() {
   var $username = $('#user-in').val();
   var $password = $('#pass-in').val();
-  console.log($('#user-in').val() + " " + $('#pass-in').val());
+  $apiToken = "";
 
   $.ajax({
     type:'POST',
@@ -43,12 +43,28 @@ $('.signin').on('click','.signin-submit',function() {
     data: {username: $username, password: $password}
   }).success(function(apiToken) {
     console.log(apiToken);
+    $apiToken = apiToken.apiToken;
   });
 });
 
-API.postChats(function(chats) {
-  console.log("Sent chats:", chats)
+$('.message').on('click','.mes-submit',function() {
+  var $message = $('#enter-mes').val();
+  console.log("message: " + $message) //prints correct message
+  console.log("in message-submit: " + $apiToken) //prints apiToken
+
+  $.post('http://chat.api.mks.io/chats',
+    {
+      apiToken: $apiToken,
+      message: $message
+    }).success(function(success) {
+      console.log(success); 
+    });
+
 });
+
+// API.postChats(function(chats) {
+//   console.log("Sent chats:", chats)
+// });
 
 // $.ajax({
 //   type: 'POST',
